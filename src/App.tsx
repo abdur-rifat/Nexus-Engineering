@@ -129,8 +129,7 @@ function App() {
           <div className="hero-controls" aria-label="Hero image controls"><button aria-label="Previous hero image" onClick={() => changeHeroSlide(-1)}><ArrowLeft size={17} /></button><div className="hero-dots">{heroSlides.map((slide, index) => <button className={heroSlide === index ? 'active' : ''} key={slide.image} aria-label={`Show hero image ${index + 1}`} onClick={() => { setHeroSlide(index); setHeroPaused(true); }} />)}</div><button aria-label="Next hero image" onClick={() => changeHeroSlide(1)}><ArrowRight size={17} /></button></div>
           <a className="scroll-cue" href="#about"><span>Scroll to explore</span><ArrowDownRight size={18} /></a>
         </section>
-
-<h1>Prothom push</h1>
+        
 
         <section id="about" className="about section page-width">
           <div className="section-marker"><span className="h-px w-8 bg-[#6F9FCB]" /> <span>ABOUT NEXUS</span></div>
