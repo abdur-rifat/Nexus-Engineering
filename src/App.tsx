@@ -60,7 +60,6 @@ function App() {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
-  const [heroPaused, setHeroPaused] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -69,15 +68,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (heroPaused) return undefined;
-    const timer = window.setInterval(() => setHeroSlide((current) => (current + 1) % heroSlides.length), 5500);
-    return () => window.clearInterval(timer);
-  }, [heroPaused]);
+  const timer = window.setInterval(() => {
+    setHeroSlide((current) => (current + 1) % heroSlides.length);
+  }, 5000);
+
+  return () => window.clearInterval(timer);
+}, []);
 
   const changeHeroSlide = (direction: number) => {
-    setHeroSlide((current) => (current + direction + heroSlides.length) % heroSlides.length);
-    setHeroPaused(true);
-  };
+  setHeroSlide(
+    (current) => (current + direction + heroSlides.length) % heroSlides.length
+  );
+};
 
   const closeMenu = () => setMenuOpen(false);
   const submitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -104,7 +106,7 @@ function App() {
 
       <main id="top">
         
-<section className="hero" aria-label="NEXUS introduction" onMouseEnter={() => setHeroPaused(true)} onMouseLeave={() => setHeroPaused(false)} onTouchStart={() => setHeroPaused(true)}>
+<section className="hero" aria-label="NEXUS introduction">
           {heroSlides.map((slide, index) => <img className={`hero-image ${heroSlide === index ? 'is-active' : ''}`} key={slide.image} src={slide.image} alt={slide.alt} />)}
           <div className="hero-shade" />
           <div className="hero-content page-width">
@@ -126,7 +128,7 @@ function App() {
             </div>
           </div>
           <div className="hero-meta"><span>EST. / NATURE OF WORK</span><strong>NATORE · BD</strong></div>
-          <div className="hero-controls" aria-label="Hero image controls"><button aria-label="Previous hero image" onClick={() => changeHeroSlide(-1)}><ArrowLeft size={17} /></button><div className="hero-dots">{heroSlides.map((slide, index) => <button className={heroSlide === index ? 'active' : ''} key={slide.image} aria-label={`Show hero image ${index + 1}`} onClick={() => { setHeroSlide(index); setHeroPaused(true); }} />)}</div><button aria-label="Next hero image" onClick={() => changeHeroSlide(1)}><ArrowRight size={17} /></button></div>
+          <div className="hero-controls" aria-label="Hero image controls"><button aria-label="Previous hero image" onClick={() => changeHeroSlide(-1)}><ArrowLeft size={17} /></button><div className="hero-dots">{heroSlides.map((slide, index) => <button className={heroSlide === index ? 'active' : ''} key={slide.image} aria-label={`Show hero image ${index + 1}`} onClick={() => { setHeroSlide(index); }} />)}</div><button aria-label="Next hero image" onClick={() => changeHeroSlide(1)}><ArrowRight size={17} /></button></div>
           <a className="scroll-cue" href="#about"><span>Scroll to explore</span><ArrowDownRight size={18} /></a>
         </section>
         
@@ -143,7 +145,7 @@ function App() {
           </div>
           <div className="about-caption">
 
-<div className="grid grid-cols-1 gap-8 border-t border-[#d8e0e9] py-10 sm:grid-cols-2 lg:grid-cols-3">
+<div className="grid grid-cols-1 gap-[90px] border-t border-[#d8e0e9] py-10 sm:grid-cols-2 lg:grid-cols-3">
 
   <div className="border-l-2 border-[var(--line)] pl-10">
     <h3 className="text-5xl font-light tracking-tight text-[#142d49] sm:text-6xl">
@@ -441,7 +443,7 @@ function App() {
         </div>
 
         {/* Small Secondary Image */}
-        <div className="hidden h-[460px] w-[75%] overflow-hidden lg:block">
+        <div className="mt-10 h-[360px] w-[100%] overflow-hidden lg:h-[460px] lg:w-[75%]">
           <img
             src={images.house}
             alt="Architectural detail"
@@ -453,7 +455,7 @@ function App() {
       </div>
 
       {/* Process Steps */}
-      <div className="flex flex-col justify-end lg:col-span-6 lg:pb-8 mt-20">
+      <div className="flex flex-col justify-end lg:col-span-6 lg:pb-8 lg:mt-20">
 
         <div className="grid grid-cols-2 gap-x-8 gap-y-7 sm:grid-cols-4 lg:grid-cols-2 lg:gap-x-12">
 
